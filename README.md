@@ -82,9 +82,43 @@ Untuk menguji klaim ini, 100 pemilik mobil yang dipilih secara acak diminta untu
 mencatat jarak yang mereka tempuh. Jika sampel acak menunjukkan rata-rata
 23.500 kilometer dan standar deviasi 3900 kilometer. (Kerjakan menggunakan library seperti referensi pada modul).
 
+  Input data yang telah ada :
+  
+  Code : 
+  
+  ```R
+  standardeviasi = 3900
+  n = 100
+  xbar = 23500
+  miu = 20000
+  ```
+  
+  Mencari *p-value* :
+  
+  Code : 
+  
+  ```R
+  z = ((xbar-miu)/(standardeviasi/sqrt(n)))
+  pvalue = pnorm(-abs(z))
+  pvalue
+  ```
+  
+  Hasil *p-value* : 
+  
+  gambar
+  
+  
 
 ### A. Apakah Anda setuju dengan klaim tersebut?
 
+  Setuju, karena H0 yaitu mobil rata-rata dikemudikan lebih dari 20.000km/tahun
+  
 ### B. Jelaskan maksud dari output yang dihasilkan!
+
+  gambar
+  
+  
 ### C. Buatlah kesimpulan berdasarkan P-Value yang dihasilkan!
 
+
+  Tidak adanya level yang siginificant. Namun p-value yang bernilai 1.425032e-19 sudah cukup kecil. Maka didapat keputusan bahwa H0 yaitu mobil rata-rata dikemudikan lebih dari 20.000km/tahun.
