@@ -16,7 +16,7 @@ mengenai kadar saturasi oksigen sebelum dan sesudah melakukan aktivitas 𝐴
 
 Tabel data
 
-  gambat tabel
+![tabel soal 1](https://user-images.githubusercontent.com/80630201/170877453-04fba31a-e674-437b-b13d-379233adf1ac.png)
 
 Berdasarkan data pada tabel diatas, diketahui kadar saturasi oksigen dari
 responden ke-3 ketika belum melakukan aktivitas 𝐴 sebanyak 67, dan setelah
@@ -49,7 +49,7 @@ Code :
   
   Hasil Code : 
   
-  gambar disini
+  ![Soal1 A](https://user-images.githubusercontent.com/80630201/170877458-ee1d0fd9-9761-48f7-8f53-e035023bb81c.png)
   
   </br>
   
@@ -66,7 +66,7 @@ Code :
   
   Hasil : 
   
-  gambar
+  ![Soal1 B](https://user-images.githubusercontent.com/80630201/170877460-03af6e3d-57f8-49fd-b884-f5c58aaf0571.png)
   
   ### C. Tentukanlah apakah terdapat pengaruh yang signifikan secara statistika dalam hal kadar saturasi oksigen , sebelum dan sesudah melakukan aktivitas 𝐴 jika diketahui tingkat signifikansi 𝛼 = 5% serta H0 : “tidak ada pengaruh yang signifikan secara statistika dalam hal kadar saturasi oksigen , sebelum dan sesudah melakukan aktivitas 𝐴”
   
