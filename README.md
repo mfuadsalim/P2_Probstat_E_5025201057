@@ -105,7 +105,7 @@ mencatat jarak yang mereka tempuh. Jika sampel acak menunjukkan rata-rata
   
   Hasil *p-value* : 
   
-  gambar
+  ![Soal2](https://user-images.githubusercontent.com/80630201/170877835-72bb52f7-f7c2-4bec-8169-58894338d9d5.png)
   
   
 
@@ -115,7 +115,8 @@ mencatat jarak yang mereka tempuh. Jika sampel acak menunjukkan rata-rata
   
 ### B. Jelaskan maksud dari output yang dihasilkan!
 
-  gambar
+  ![Soal 2B](https://user-images.githubusercontent.com/80630201/170877838-1eeb7668-f337-4d3f-8336-96d43436bac1.png)
+
   
   
 ### C. Buatlah kesimpulan berdasarkan P-Value yang dihasilkan!
