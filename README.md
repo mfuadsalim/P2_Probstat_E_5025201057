@@ -212,11 +212,98 @@ sama
 Maka Kerjakan atau Carilah:
 
 ### A. Buatlah masing masing jenis spesies menjadi 3 subjek "Grup" (grup 1,grup 2,grup 3). Lalu Gambarkan plot kuantil normal untuk setiap kelompok dan lihat apakah ada outlier utama dalam homogenitas varians.
+
+Code : 
+
+  ```R
+  dataoneway <- read.table("https://rstatisticsandresearch.weebly.com/uploads/1/0/2/6/1026585/onewayanova.txt",h=T)
+  attach(dataoneway)
+  names(dataoneway)
+
+  dataoneway$Group <- as.factor(dataoneway$Group)
+  dataoneway$Group = factor(dataoneway$Group,labels = c("Orange", "Hitam", "Putih"))
+
+  class(dataoneway$Group)
+
+  Group1 <- subset(dataoneway, Group == "Orange")
+  Group2 <- subset(dataoneway, Group == "Hitam")
+  Group3 <- subset(dataoneway, Group == "Putih")
+
+  qqnorm(Group1$Length)
+  qqline(Group1$Length)
+
+  ```
+Hasil : 
+
+  ![code Soal 4 A](https://user-images.githubusercontent.com/80630201/171022376-00e90df6-0123-48d0-8c5b-db6af05faf23.png)
+  
+  Tabel :
+  
+  ![Soal 4 A](https://user-images.githubusercontent.com/80630201/171022403-475dbd79-f31b-4cc7-b070-5fad664bfe93.png)
+
+
 ### B. Carilah atau periksalah Homogeneity of variances nya , Berapa nilai p yang didapatkan? , Apa hipotesis dan kesimpulan yang dapat diambil ?
+
+Code :
+
+  ```R
+  bartlett.test(Length ~ Group, data = dataoneway)
+  ```
+  
+  Hasil : 
+  
+  ![code Soal 4 B](https://user-images.githubusercontent.com/80630201/171022378-bc700392-6a15-4b00-81d7-f37737daf667.png)
+  
 ### C. Untuk uji ANOVA (satu arah), buatlah model linier dengan Panjang versusGrup dan beri nama model tersebut model 1.
+
+Code :
+
+  ```R
+  model1 = lm(Length ~ Group, data = dataoneway)
+  anova(model1)
+  ```
+  
+  Hasil :
+  
+  ![code Soal 4 C](https://user-images.githubusercontent.com/80630201/171022381-d4eccb44-a975-48cb-8790-4c9273e30133.png)
+  
 ### D. Dari Hasil Poin C, Berapakah nilai-p ? , Apa yang dapat Anda simpulkandari H0?
+  
+  Didapatkan nilai dari p-value yaitu = `0.8054.`
+  
 ### E. Verifikasilah jawaban model 1 dengan Post-hoc test Tukey HSD, dari nilai p yang didapatkan apakah satu jenis kucing lebih panjang dari yang lain?
+
+Code : 
+  ```R
+  model1 <- lm(Length~Group, data=myFile)
+  anova(model1)
+  TukeyHSD(aov(model1))
+  ```
+  
+Hasil : 
+  
+  ![code Soal 4 E](https://user-images.githubusercontent.com/80630201/171022385-6c19cffa-3c05-44d2-ac42-83a60b217336.png)
+  
+  
 ### F. Visualisasikan data dengan ggplot2
+
+Code :
+
+  ```R
+  library(ggplot2)
+  ggplot(dataoneway, aes(x = Group, y = Length)) + geom_boxplot(fill = "grey80", colour = "black") + 
+  scale_x_discrete() + xlab("Treatment Group") +  ylab("Length (cm)")
+
+  ```
+  
+Hasil :
+
+  ![code Soal 4 F](https://user-images.githubusercontent.com/80630201/171022362-591f9c14-5fbc-4fc5-aff6-d34d834f50d6.png)
+  
+  Tabel :
+  
+  ![Soal 4 F](https://user-images.githubusercontent.com/80630201/171022397-243bcdc9-d723-4ecf-b977-02530770bb0b.png)
+  
 
 # Soal 5
 Data yang digunakan merupakan hasil eksperimen yang dilakukan untuk
@@ -227,12 +314,80 @@ Eksperimen. Dengan data tersebut:
 
 ### A. Buatlah plot sederhana untuk visualisasi data
 
+  Code :
+
+  ```R
+  GTL <- read_csv("https://drive.google.com/u/0/uc?id=1aLUOdw_LVJq6VQrQEkuQhZ8FW43FemTJ&export=download")
+  head(GTL)
+  str(GTL)
+  qplot(x = Temp, y = Light, geom = "point", data = GTL) + facet_grid(.~Glass, labeller = label_both)
+  ```
+
+  Hasil :
+
+  ![code Soal 5 A](https://user-images.githubusercontent.com/80630201/171022744-f226f67e-96c1-4490-95c8-683edbcd429e.png)
+
+
+  Tabel :
+  
+  ![Soal5 A](https://user-images.githubusercontent.com/80630201/171022738-7a39fc87-6da5-4477-a208-37e2ddb7d59b.png)
+
 ### B. Lakukan uji ANOVA dua arah
 
-### C. Tampilkan tabel dengan mean dan standar deviasi keluaran cahaya untuk setiap perlakuan (kombinasi kaca pelat muka dan suhu operasi)
+  Code :
+  
+   ```R
+   GTL$Glass <- as.factor(GTL$Glass)
+   GTL$Temp_Factor <- as.factor(GTL$Temp)
+   str(GTL)
+   anova <- aov(Light ~ Glass*Temp_Factor, data = GTL)
+   summary(anova)
+   ```
+   
+  Hasil : 
+  
+  ![code Soal 5 B](https://user-images.githubusercontent.com/80630201/171022747-3f47265a-3d7f-40fa-8694-067276a64bb1.png)
 
+### C. Tampilkan tabel dengan mean dan standar deviasi keluaran cahaya untuk setiap perlakuan (kombinasi kaca pelat muka dan suhu operasi)
+  
+  Code :
+  
+  ```R
+  data_summary <- group_by(GTL, Glass, Temp) %>% summarise(mean=mean(Light), sd=sd(Light)) %>% arrange(desc(mean))
+  data_summary
+  ```
+ 
+  Hasil :
+  
+  ![code Soal 5 C](https://user-images.githubusercontent.com/80630201/171022748-a47d68c4-527e-4a08-b017-027d29393d80.png)
+  
+  
 ### D. Lakukan uji Tukey
+
+  Code :
+  
+  ```R
+  tukey <- TukeyHSD(anova)
+  tukey
+  ```
+  
+  Hasil :
+  
+  ![code Soal 5 D](https://user-images.githubusercontent.com/80630201/171022756-92118f9f-adb2-4a8f-8292-11e45a3c61a6.png)
+  
   
 ### E. Gunakan compact letter display untuk menunjukkan perbedaan signifikan antara uji Anova dan uji Tukey
-
+  
+  Code :
+   ```R
+   tukey.cld <- multcompLetters4(anova, tukey)
+   tukey.cld
+   cld <- as.data.frame.list(tukey.cld$`Glass:Temp_Factor`)
+   data_summary$Tukey <- cld$Letters
+   data_summary
+   ```
+   
+  Hasil :
+  
+  ![code Soal 5 E](https://user-images.githubusercontent.com/80630201/171022728-70b796ad-b48d-468c-819c-210b1da4248e.png)
 
