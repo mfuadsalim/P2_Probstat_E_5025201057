@@ -47,3 +47,80 @@ qchisq(p = 0.05, df = 2, lower.tail = FALSE)
 #E Jawaban ada di README.md
 
 #F Jawaban ada di README.md
+
+#Soal4
+
+#A
+
+dataoneway <- read.table("https://rstatisticsandresearch.weebly.com/uploads/1/0/2/6/1026585/onewayanova.txt",h=T)
+attach(dataoneway)
+names(dataoneway)
+
+dataoneway$Group <- as.factor(dataoneway$Group)
+dataoneway$Group = factor(dataoneway$Group,labels = c("Orange", "Hitam", "Putih"))
+
+class(dataoneway$Group)
+
+Group1 <- subset(dataoneway, Group == "Orange")
+Group2 <- subset(dataoneway, Group == "Hitam")
+Group3 <- subset(dataoneway, Group == "Putih")
+
+qqnorm(Group1$Length)
+qqline(Group1$Length)
+
+#B
+bartlett.test(Length ~ Group, data = dataoneway)
+
+#C
+model1 = lm(Length ~ Group, data = dataoneway)
+anova(model1)
+
+#D Jawaban ada di README.md
+
+#E
+model1 <- lm(Length~Group, data=myFile)
+
+anova(model1)
+
+TukeyHSD(aov(model1))
+
+#F
+library(ggplot2)
+ggplot(dataoneway, aes(x = Group, y = Length)) + geom_boxplot(fill = "grey80", colour = "black") + 
+  scale_x_discrete() + xlab("Treatment Group") +  ylab("Length (cm)")
+
+#Soal5
+
+install.packages("multcompView")
+library(readr)
+library(ggplot2)
+library(multcompView)
+library(dplyr)
+
+#A
+GTL <- read_csv("https://drive.google.com/u/0/uc?id=1aLUOdw_LVJq6VQrQEkuQhZ8FW43FemTJ&export=download")
+head(GTL)
+str(GTL)
+qplot(x = Temp, y = Light, geom = "point", data = GTL) + facet_grid(.~Glass, labeller = label_both)
+
+#B
+GTL$Glass <- as.factor(GTL$Glass)
+GTL$Temp_Factor <- as.factor(GTL$Temp)
+str(GTL)
+anova <- aov(Light ~ Glass*Temp_Factor, data = GTL)
+summary(anova)
+
+#C
+data_summary <- group_by(GTL, Glass, Temp) %>% summarise(mean=mean(Light), sd=sd(Light)) %>% arrange(desc(mean))
+data_summary
+
+#D
+tukey <- TukeyHSD(anova)
+tukey
+
+#E
+tukey.cld <- multcompLetters4(anova, tukey)
+tukey.cld
+cld <- as.data.frame.list(tukey.cld$`Glass:Temp_Factor`)
+data_summary$Tukey <- cld$Letters
+data_summary
